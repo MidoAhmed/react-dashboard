@@ -64,7 +64,7 @@ const mapboxConfig = {
   defaultZoom: '',
   center: [],
 };
-const youtubeSearchApi = '';
+const youtubeSearchApi = 'AIzaSyD62G9sk4Mk66uj28FeWoreQLLlWcy7k3o';
 export {
   siteConfig,
   themeConfig,
