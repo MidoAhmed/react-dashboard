@@ -1,10 +1,11 @@
 export default {
   apiUrl: 'http://joeylin.net/api/',
 };
+
 const siteConfig = {
-  siteName: 'joeylin.net',
+  siteName: 'Isomorphic',
   siteIcon: 'ion-beer',
-  footerText: 'Isomorphic ©2017 Created with LOVE by Joey Lin',
+  footerText: 'Isomorphic ©2019 Created with LOVE by Med',
 };
 
 const themeConfig = {
@@ -13,11 +14,14 @@ const themeConfig = {
   layout: 'themedefault',
   theme: 'themedefault',
 };
+
 const language = 'english';
+
 const AlgoliaSearchConfig = {
   appId: '',
   apiKey: '',
 };
+
 const Auth0Config = {
   domain: '',
   clientID: '', //
@@ -47,6 +51,7 @@ const Auth0Config = {
     },
   },
 };
+
 const firebaseConfig = {
   apiKey: '',
   authDomain: '',
@@ -55,16 +60,20 @@ const firebaseConfig = {
   storageBucket: '',
   messagingSenderId: '',
 };
+
 const googleConfig = {
   apiKey: '', //
 };
+
 const mapboxConfig = {
   tileLayer: '',
   maxZoom: '',
   defaultZoom: '',
   center: [],
 };
+
 const youtubeSearchApi = 'AIzaSyD62G9sk4Mk66uj28FeWoreQLLlWcy7k3o';
+
 export {
   siteConfig,
   themeConfig,
