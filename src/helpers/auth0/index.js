@@ -1,6 +1,6 @@
 import Auth0Lock from 'auth0-lock';
 import history from './history';
-import { Auth0Config } from '../../config.js';
+import { Auth0Config } from '../../../config.js';
 import { notification } from '../../components';
 
 class Auth0Helper {

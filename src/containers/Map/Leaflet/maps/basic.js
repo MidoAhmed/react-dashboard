@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { mapboxConfig } from '../../../../config.js';
+import { mapboxConfig } from '../../../../../config.js';
 import 'leaflet';
 import LeafletMapWrapper from './map.style';
 

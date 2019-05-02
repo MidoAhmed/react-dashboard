@@ -1,4 +1,4 @@
-import { themeConfig } from '../../config.js';
+import { themeConfig } from '../../../config.js';
 const changeThemes = {
   id: 'changeThemes',
   label: 'themeSwitcher',

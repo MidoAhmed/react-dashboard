@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import { firebaseConfig } from '../../config.js';
+import { firebaseConfig } from '../../../config.js';
 
 const valid = firebaseConfig  && firebaseConfig.apiKey && firebaseConfig.projectId;
 

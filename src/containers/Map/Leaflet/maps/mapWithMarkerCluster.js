@@ -4,7 +4,7 @@ import 'leaflet.markercluster';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
-import { mapboxConfig } from '../../../../config.js';
+import { mapboxConfig } from '../../../../../config.js';
 import { markerCluster } from '../config';
 import LeafletMapWrapper from './map.style';
 

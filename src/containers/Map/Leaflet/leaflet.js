@@ -7,7 +7,7 @@ import ContentHolder from '../../../components/utility/contentHolder';
 import IntlMessages from '../../../components/utility/intlMessages';
 import Box from '../../../components/utility/box';
 import basicStyle from '../../../config/basicStyle';
-import { mapboxConfig } from '../../../config.js';
+import { mapboxConfig } from '../../../../config.js';
 
 const BasicLeafletMap = (props) => <Async load={import(/* webpackChunkName: "basicLeafletMap" */ './maps/basic')} componentProps={props} componentArguement={'leafletMap'} />;
 const BasicLeafletMapWithMarker = (props) => <Async load={import(/* webpackChunkName: "basicLeafletMapWithMarker" */ './maps/mapWithDefaultMarker.js')} componentProps={props} componentArguement={'leafletMap'} />;
