@@ -17,7 +17,6 @@ const themeConfig = {
 };
 
 const language = 'english';
-const language = 'english';
 
 const AlgoliaSearchConfig = {
     appId: '',
@@ -87,4 +86,3 @@ export {
     mapboxConfig,
     youtubeSearchApi,
 };
-
