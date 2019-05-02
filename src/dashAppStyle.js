@@ -3,7 +3,6 @@ import { palette, font } from 'styled-theme';
 
 const DashAppHolder = styled.div`
   font-family: ${font('primary', 0)};
-
   h1,
   h2,
   h3,
