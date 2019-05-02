@@ -8,6 +8,7 @@ const siteConfig = {
   footerText: 'Isomorphic ©2019 Created with LOVE by Med',
 };
 
+
 const themeConfig = {
   topbar: 'themedefault',
   sidebar: 'themedefault',
