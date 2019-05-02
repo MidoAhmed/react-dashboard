@@ -1,4 +1,4 @@
-import { language } from '../../../config.js';
+import { language } from '../../config.js';
 
 import englishLang from '../../image/flag/uk.svg';
 import chineseLang from '../../image/flag/china.svg';

@@ -11,7 +11,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import Topbar from '../Topbar/Topbar';
 import ThemeSwitcher from '../../containers/ThemeSwitcher';
 import AppRouter from './AppRouter';
-import { siteConfig } from '../../../config.js';
+import { siteConfig } from '../../config.js';
 import { AppLocale } from '../../dashApp';
 import themes from '../../config/themes';
 import AppHolder from './commonStyle';
@@ -69,7 +69,7 @@ export class App extends Component {
                     </Footer>
                   </Layout>
                 </Layout>
-                <ThemeSwitcher />
+                {/*<ThemeSwitcher />*/}
               </Layout>
             </AppHolder>
           </ThemeProvider>

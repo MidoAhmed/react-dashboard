@@ -3,7 +3,7 @@ import 'leaflet';
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import 'leaflet-routing-machine/dist/leaflet.routing.icons.png';
-import { mapboxConfig } from '../../../../../config.js';
+import { mapboxConfig } from '../../../../config.js';
 import LeafletMapWrapper from './map.style';
 // import { markerRouting } from '../config';
 

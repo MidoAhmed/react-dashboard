@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { siteConfig } from '../../../config.js';
+import { siteConfig } from '../../config.js';
 
 // export default function({ collapsed, styling }) {
 export default function({ collapsed }) {
