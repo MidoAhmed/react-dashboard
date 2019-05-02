@@ -49,3 +49,4 @@ certs
 import
 run.sh
 *.csv
+src/config.js
