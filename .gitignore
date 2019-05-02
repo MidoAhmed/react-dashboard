@@ -41,7 +41,7 @@ build/Release
 node_modules
 bower_components
 
-src/config.js
+config.js
 
 env
 prod
