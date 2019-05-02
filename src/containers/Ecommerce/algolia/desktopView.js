@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { InstantSearch } from 'react-instantsearch/dom';
 import { Footer, Sidebar, Content } from '../../../components/algolia';
 import EmptyComponent from '../../../components/emptyComponent.js';
-import { AlgoliaSearchConfig } from '../../../../config';
+import { AlgoliaSearchConfig } from '../../../config';
 import { setUrl, getInitData } from '../../../helpers/urlSync';
 import './instantSearch.css';
 import AlgoliaSearchPageWrapper from './algolia.style';
