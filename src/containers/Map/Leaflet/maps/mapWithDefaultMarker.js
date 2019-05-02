@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'leaflet';
-import { mapboxConfig } from '../../../../config.js';
+import { mapboxConfig } from '../../../../../config.js';
 import { basicMarkers } from '../config';
 import LeafletMapWrapper from './map.style';
 

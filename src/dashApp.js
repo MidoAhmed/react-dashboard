@@ -10,7 +10,7 @@ import AppLocale from './languageProvider';
 import config, {
   getCurrentLanguage
 } from './containers/LanguageSwitcher/config';
-import { themeConfig } from './config';
+import { themeConfig } from '../config';
 import DashAppHolder from './dashAppStyle';
 // import 'antd/dist/antd.css';
 

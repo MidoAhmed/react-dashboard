@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { posts } from '../config.js';
-import { googleConfig } from '../../../../config';
+import { googleConfig } from '../../../../../config';
 import { GoogleApiWrapper } from 'google-maps-react';
 import BasicMapWrapper from './map.style';
 

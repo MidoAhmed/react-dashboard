@@ -1,6 +1,6 @@
 import { all, takeEvery, put, call } from 'redux-saga/effects';
 import actions from './actions';
-import { youtubeSearchApi } from '../../config';
+import { youtubeSearchApi } from '../../../config';
 export const per_page = 10;
 const maxResults = 10;
 const gitSearchApi = `https://www.googleapis.com/youtube/v3/search?maxResults=${maxResults}&type=video&key=${youtubeSearchApi}&part=snippet`;
