@@ -41,6 +41,8 @@ build/Release
 node_modules
 bower_components
 
+src/config.js
+
 env
 prod
 dist
@@ -49,4 +51,3 @@ certs
 import
 run.sh
 *.csv
-src/config.js
