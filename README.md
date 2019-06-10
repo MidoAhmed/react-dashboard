@@ -1,9 +1,4 @@
-# Isomorphic - React Redux Admin Dashboard `Version 2.4.0`
+# React Redux Admin Dashboard
+# NodeJs + express API 
 
 ### Please check `src/config.js` & edit as your app.
-
-Installation Guide:
-https://redq.gitbooks.io/isomorphic/content/
-
-Demo page:
-https://isomorphic.redq.io/
