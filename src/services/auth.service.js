@@ -6,6 +6,7 @@ class Auth extends AppServices {
         super();
         this.getAuthenticated = this.getAuthenticated.bind(this);
         this.signIn = this.signIn.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     signIn(payload) {

@@ -10,14 +10,27 @@ import Firebase from '../../helpers/firebase';
 import FirebaseLogin from '../../components/firebase';
 import IntlMessages from '../../components/utility/intlMessages';
 import SignInStyleWrapper from './signin.style';
+import message from "../../components/feedback/message";
+import MessageContent from "../Feedback/Message/message.style";
 
 const {login} = authAction;
 
 class SignIn extends Component {
     state = {
+        credentials: {
+            email: '',
+            password: ''
+        },
         redirectToReferrer: false,
         loading: false
     };
+
+    
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.loginFailed !== this.props.loginFailed && this.props.loginFailed !== null) {
+            this.toastLoginError();
+        }
+    }
 
     componentWillReceiveProps(nextProps) {
         /*if (this.props.isLoggedIn !== nextProps.isLoggedIn && nextProps.isLoggedIn === true) {
@@ -27,11 +40,11 @@ class SignIn extends Component {
 
     handleLogin = () => {
         const {login} = this.props;
-        login();
+        login(this.state.credentials);
     };
 
-    enterLoading = () => {
-        this.setState({loading: true});
+    toastLoginError = () => {
+        message.error(<MessageContent>{this.props.loginFailed}</MessageContent>, 5);
     };
 
     render() {
@@ -53,11 +66,31 @@ class SignIn extends Component {
 
                         <div className="isoSignInForm">
                             <div className="isoInputWrapper">
-                                <Input size="large" placeholder="Username"/>
+                                <Input size="large"
+                                       placeholder="Username"
+                                       onChange={
+                                           (_event) => this.setState({
+                                               credentials: {
+                                                   ...this.state.credentials,
+                                                   email: _event.target.value
+                                               }
+                                           })
+                                       }
+                                />
                             </div>
 
                             <div className="isoInputWrapper">
-                                <Input size="large" type="password" placeholder="Password"/>
+                                <Input size="large"
+                                       type="password"
+                                       placeholder="Password"
+                                       onChange={
+                                           (_event) => this.setState({
+                                               credentials: {
+                                                   ...this.state.credentials,
+                                                   password: _event.target.value
+                                               }
+                                           })
+                                       }/>
                             </div>
 
                             <div className="isoInputWrapper isoLeftRightComponent">
@@ -114,7 +147,8 @@ class SignIn extends Component {
 export default connect(
     state => ({
         isLoggedIn: state.Auth.get('idToken') !== null,
-        loading: state.Auth.get('loading')
+        loading: state.Auth.get('loading'),
+        loginFailed: state.Auth.get('loginFailed')
     }),
     {login}
 )(SignIn);

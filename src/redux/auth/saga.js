@@ -7,28 +7,29 @@ import auth from '../../services/auth.service'
 const fakeApiCall = false; // auth0 or express JWT
 
 export function* loginRequest() {
-    yield takeEvery(actions.LOGIN_REQUEST, function* () {
-        const payload = {
-            email: "lorem",
-            password: "password"
-        };
-        const res = yield call(auth.signIn, payload)
-        const body = yield res.json();
-        yield put({
-            type: actions.LOGIN_SUCCESS,
-            token: body.user.token,
-            profile: body.user
-        });
+    yield takeEvery(actions.LOGIN_REQUEST, function* (payload) {
 
-        /*if (fakeApiCall) {
-          yield put({
-            type: actions.LOGIN_SUCCESS,
-            token: 'secret token',
-            // profile: 'Profile'
-          });
-        } else {
-          yield put({ type: actions.LOGIN_ERROR });
-        }*/
+
+        try {
+            const credentials = payload.payload;
+            const result = yield call(auth.signIn, credentials);
+            const status = result.status;
+            const body = yield result.json();
+            auth.handleCommonError({status, body});
+            if (body && body.user)
+                yield put({
+                    type: actions.LOGIN_SUCCESS,
+                    token: body.user.token,
+                    profile: body.user
+                });
+        } catch (error) {
+            console.error(error);
+            yield put({
+                type: actions.LOGIN_ERROR,
+                loginFailed: error.message
+            });
+        }
+
     });
 }
 
