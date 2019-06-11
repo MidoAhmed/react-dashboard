@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
-import Input from '../../components/uielements/input';
 import Checkbox from '../../components/uielements/checkbox';
 import Button from '../../components/uielements/button';
 import authAction from '../../redux/auth/actions';
@@ -12,6 +11,11 @@ import IntlMessages from '../../components/utility/intlMessages';
 import SignInStyleWrapper from './signin.style';
 import message from "../../components/feedback/message";
 import MessageContent from "../Feedback/Message/message.style";
+import {Form} from 'antd';
+import {Input} from 'antd';
+import Notification from "../../components/notification";
+
+const FormItem = Form.Item;
 
 const {login} = authAction;
 
@@ -25,17 +29,18 @@ class SignIn extends Component {
         loading: false
     };
 
-    
+
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.loginFailed !== this.props.loginFailed && this.props.loginFailed !== null) {
-            this.toastLoginError();
-        }
     }
 
     componentWillReceiveProps(nextProps) {
         /*if (this.props.isLoggedIn !== nextProps.isLoggedIn && nextProps.isLoggedIn === true) {
             this.setState({redirectToReferrer: true});
         }*/
+
+        if (nextProps.loginFailed !== this.props.loginFailed && nextProps.loginFailed !== null) {
+            this.toastLoginError(nextProps.loginFailed);
+        }
     }
 
     handleLogin = () => {
@@ -43,8 +48,24 @@ class SignIn extends Component {
         login(this.state.credentials);
     };
 
-    toastLoginError = () => {
-        message.error(<MessageContent>{this.props.loginFailed}</MessageContent>, 5);
+    toastLoginError = (_msg) => {
+        message.error(<MessageContent>{_msg}</MessageContent>, 5);
+    };
+
+    handleSubmit = e => {
+        e.preventDefault();
+        this.props.form.validateFieldsAndScroll((err, values) => {
+            console.log('err', err ,'values', values);
+            const {login} = this.props;
+            login(this.state.credentials);
+            /*if (!err) {
+                Notification(
+                    'success',
+                    'Received values of form',
+                    JSON.stringify(values)
+                );
+            }*/
+        });
     };
 
     render() {
@@ -54,6 +75,34 @@ class SignIn extends Component {
         if (redirectToReferrer) {
             return <Redirect to={from}/>;
         }
+
+
+        const {getFieldDecorator} = this.props.form;
+
+        const formItemLayout = {
+            labelCol: {
+                xs: {span: 24},
+                sm: {span: 6},
+            },
+            wrapperCol: {
+                xs: {span: 24},
+                sm: {span: 14},
+            },
+        };
+
+        const tailFormItemLayout = {
+            wrapperCol: {
+                xs: {
+                    span: 24,
+                    offset: 0,
+                },
+                sm: {
+                    span: 14,
+                    offset: 6,
+                },
+            },
+        };
+
         return (
             <SignInStyleWrapper className="isoSignInPage">
                 <div className="isoLoginContentWrapper">
@@ -65,7 +114,8 @@ class SignIn extends Component {
                         </div>
 
                         <div className="isoSignInForm">
-                            <div className="isoInputWrapper">
+
+                            {/*<div className="isoInputWrapper">
                                 <Input size="large"
                                        placeholder="Username"
                                        onChange={
@@ -102,13 +152,57 @@ class SignIn extends Component {
                                         loading={this.props.loading}>
                                     <IntlMessages id="page.signInButton"/>
                                 </Button>
-                            </div>
+                            </div>*/}
 
-                            <p className="isoHelperText">
+                            <Form onSubmit={this.handleSubmit}>
+                                <FormItem {...formItemLayout} label="Username" hasFeedback>
+                                    {getFieldDecorator('username', {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Please input your Username!',
+                                            },
+                                        ],
+                                    })(<Input name="username" id="username" onChange={
+                                        (_event) => this.setState({
+                                            credentials: {
+                                                ...this.state.credentials,
+                                                email: _event.target.value
+                                            }
+                                        })
+                                    }/>)}
+                                </FormItem>
+                                <FormItem {...formItemLayout} label="Password" hasFeedback>
+                                    {getFieldDecorator('password', {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Please input your password!',
+                                            }
+                                        ],
+                                    })(<Input type="password" onChange={
+                                        (_event) => this.setState({
+                                            credentials: {
+                                                ...this.state.credentials,
+                                                password: _event.target.value
+                                            }
+                                        })
+                                    }/>)}
+                                </FormItem>
+                                <FormItem {...tailFormItemLayout}>
+                                    <Button type="primary"
+                                            htmlType="submit"
+                                            loading={this.props.loading}>
+                                        <IntlMessages id="page.signInButton"/>
+                                    </Button>
+                                </FormItem>
+                            </Form>
+
+                            {/*<p className="isoHelperText">
                                 <IntlMessages id="page.signInPreview"/>
-                            </p>
+                            </p>*/}
 
-                            <div className="isoInputWrapper isoOtherLogin">
+                            {/*<div className="isoInputWrapper isoOtherLogin">
                                 <Button onClick={this.handleLogin} type="primary btnFacebook">
                                     <IntlMessages id="page.signInFacebook"/>
                                 </Button>
@@ -127,7 +221,8 @@ class SignIn extends Component {
                                 </Button>}
 
                                 {Firebase.isValid && <FirebaseLogin login={this.handleLogin}/>}
-                            </div>
+                            </div>*/}
+
                             <div className="isoCenterComponent isoHelperWrapper">
                                 <Link to="/forgotpassword" className="isoForgotPass">
                                     <IntlMessages id="page.signInForgotPass"/>
@@ -136,6 +231,7 @@ class SignIn extends Component {
                                     <IntlMessages id="page.signInCreateAccount"/>
                                 </Link>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -151,4 +247,4 @@ export default connect(
         loginFailed: state.Auth.get('loginFailed')
     }),
     {login}
-)(SignIn);
+)(Form.create()(SignIn));
