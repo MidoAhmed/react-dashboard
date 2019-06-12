@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
+import {palette} from 'styled-theme';
 import bgImage from '../../image/sign.jpg';
 import WithDirection from '../../config/withDirection';
 
@@ -93,6 +93,20 @@ const SignInStyleWrapper = styled.div`
             color: ${palette('grayscale', 0)};
           }
         }
+        
+        .invalid{
+            border-color: #f5222d;
+            &:focus{
+                 -webkit-box-shadow: 0 0 0 2px rgba(245, 34, 45, 0.2);
+                 box-shadow: 0 0 0 2px rgba(245, 34, 45, 0.2);
+            }
+        }
+        
+        .input-explain{
+            span{
+            color: #f5222d;
+            }
+        }
       }
 
       .isoHelperText {
@@ -101,9 +115,9 @@ const SignInStyleWrapper = styled.div`
         line-height: 1.2;
         color: ${palette('grayscale', 1)};
         padding-left: ${props =>
-          props['data-rtl'] === 'rtl' ? 'inherit' : '13px'};
+    props['data-rtl'] === 'rtl' ? 'inherit' : '13px'};
         padding-right: ${props =>
-          props['data-rtl'] === 'rtl' ? '13px' : 'inherit'};
+    props['data-rtl'] === 'rtl' ? '13px' : 'inherit'};
         margin: 15px 0;
         position: relative;
         display: flex;
