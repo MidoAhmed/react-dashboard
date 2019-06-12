@@ -11,22 +11,58 @@ import IntlMessages from '../../components/utility/intlMessages';
 import SignInStyleWrapper from './signin.style';
 import message from "../../components/feedback/message";
 import MessageContent from "../Feedback/Message/message.style";
-import {Form} from 'antd';
 import {Input} from 'antd';
-import Notification from "../../components/notification";
 
-const FormItem = Form.Item;
 
 const {login} = authAction;
 
 class SignIn extends Component {
     state = {
-        credentials: {
-            email: '',
-            password: ''
-        },
         redirectToReferrer: false,
-        loading: false
+        loading: false,
+        form: {
+            username: {
+                value: '',
+                validation: {
+                    required: {
+                        value: true,
+                        message: 'Please input your Username !'
+                    },
+                    minLength: {
+                        value: 2,
+                        message: 'Username minLength is 6 characters!'
+                    },
+                    maxLength: {
+                        value: 10,
+                        message: 'Username maxLength is 30 characters!'
+                    }
+                },
+                errors: [],
+                valid: false,
+                touched: false
+            },
+            password: {
+                value: '',
+                validation: {
+                    required: {
+                        value: true,
+                        message: 'Please input your Password !'
+                    },
+                    minLength: {
+                        value: 2,
+                        message: 'Password maxLength is 6 characters!'
+                    },
+                    maxLength: {
+                        value: 10,
+                        message: 'Password maxLength is 30 characters!'
+                    }
+                },
+                errors: [],
+                valid: false,
+                touched: false
+            }
+        },
+        formIsValid: false
     };
 
 
@@ -43,9 +79,74 @@ class SignIn extends Component {
         }
     }
 
+    inputChangeHandler = (event, inputIdentifier) => {
+        const updatedForm = {
+            ...this.state.form
+        };
+        const updatedFormElement = {
+            ...updatedForm[inputIdentifier]
+        };
+        updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement);
+        updatedFormElement.touched = true;
+        updatedForm[inputIdentifier] = updatedFormElement;
+
+        let formIsValid = true;
+        for (let inputIdentifier in updatedForm) {
+            formIsValid = updatedForm[inputIdentifier].valid && formIsValid;
+        }
+        this.setState({form: updatedForm, formIsValid: formIsValid});
+    };
+
+    checkValidity = (value, updatedFormElement) => {
+        const rules = updatedFormElement.validation;
+        delete updatedFormElement.errors;
+        updatedFormElement.errors = [];
+        let isValid = true;
+
+        if (rules.required.value) {
+            isValid = value.trim() !== '' && isValid;
+            if (!(value.trim() !== ''))
+                updatedFormElement.errors.push({key: 'required', message: rules.required.message});
+        }
+
+        if (rules.minLength.value) {
+            isValid = value.length >= rules.minLength.value && isValid;
+            if (!(value.length >= rules.minLength.value) && (value.trim() !== '')) {
+                updatedFormElement.errors.push({key: 'minLength', message: rules.minLength.message});
+            }
+            else {
+                let index = -1;
+                updatedFormElement.errors.forEach(
+                    (item, _index) => {
+                        index = (item.key === 'minLength') ? _index : -1;
+                    });
+                if (index !== -1)
+                    updatedFormElement.errors.splice(index, 1);
+            }
+        }
+
+        if (rules.maxLength.value) {
+            isValid = value.length <= rules.maxLength.value && isValid;
+            if (!(value.length <= rules.maxLength.value))
+                updatedFormElement.errors.push({key: 'maxLength', message: rules.maxLength.message});
+            else {
+                let index = -1;
+                updatedFormElement.errors.forEach(
+                    (item, _index) => {
+                        index = (item.key === 'maxLength') ? _index : -1;
+                    });
+                if (index !== -1)
+                    updatedFormElement.errors.splice(index, 1);
+            }
+        }
+
+        return isValid;
+    };
+
     handleLogin = () => {
         const {login} = this.props;
-        login(this.state.credentials);
+        login({email: this.state.form.username.value, password: this.state.form.password.value});
     };
 
     toastLoginError = (_msg) => {
@@ -55,7 +156,7 @@ class SignIn extends Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
-            console.log('err', err ,'values', values);
+            console.log('err', err, 'values', values);
             const {login} = this.props;
             login(this.state.credentials);
             /*if (!err) {
@@ -77,32 +178,6 @@ class SignIn extends Component {
         }
 
 
-        const {getFieldDecorator} = this.props.form;
-
-        const formItemLayout = {
-            labelCol: {
-                xs: {span: 24},
-                sm: {span: 6},
-            },
-            wrapperCol: {
-                xs: {span: 24},
-                sm: {span: 14},
-            },
-        };
-
-        const tailFormItemLayout = {
-            wrapperCol: {
-                xs: {
-                    span: 24,
-                    offset: 0,
-                },
-                sm: {
-                    span: 14,
-                    offset: 6,
-                },
-            },
-        };
-
         return (
             <SignInStyleWrapper className="isoSignInPage">
                 <div className="isoLoginContentWrapper">
@@ -115,32 +190,36 @@ class SignIn extends Component {
 
                         <div className="isoSignInForm">
 
-                            {/*<div className="isoInputWrapper">
+                            <div className="isoInputWrapper">
                                 <Input size="large"
                                        placeholder="Username"
-                                       onChange={
-                                           (_event) => this.setState({
-                                               credentials: {
-                                                   ...this.state.credentials,
-                                                   email: _event.target.value
-                                               }
-                                           })
-                                       }
+                                       className={!this.state.form.username.valid && this.state.form.username.validation && this.state.form.username.touched ? 'invalid' : ''}
+                                       onChange={(event) => this.inputChangeHandler(event, 'username')}
                                 />
+                                {
+                                    (!this.state.form.username.valid && this.state.form.username.validation && this.state.form.username.touched) &&
+                                    this.state.form.username.errors.map(
+                                        (item, index) => <div className="input-explain" key={index}>
+                                            <span>{item.message}</span>
+                                        </div>
+                                    )
+                                }
                             </div>
 
                             <div className="isoInputWrapper">
                                 <Input size="large"
                                        type="password"
                                        placeholder="Password"
-                                       onChange={
-                                           (_event) => this.setState({
-                                               credentials: {
-                                                   ...this.state.credentials,
-                                                   password: _event.target.value
-                                               }
-                                           })
-                                       }/>
+                                       className={!this.state.form.password.valid && this.state.form.password.validation && this.state.form.password.touched ? 'invalid' : ''}
+                                       onChange={(event) => this.inputChangeHandler(event, 'password')}/>
+                                {
+                                    (!this.state.form.password.valid && this.state.form.password.validation && this.state.form.password.touched) &&
+                                    this.state.form.password.errors.map(
+                                        (item, index) => <div className="input-explain" key={index}>
+                                            <span>{item.message}</span>
+                                        </div>
+                                    )
+                                }
                             </div>
 
                             <div className="isoInputWrapper isoLeftRightComponent">
@@ -149,54 +228,11 @@ class SignIn extends Component {
                                 </Checkbox>
                                 <Button type="primary"
                                         onClick={this.handleLogin}
-                                        loading={this.props.loading}>
+                                        loading={this.props.loading}
+                                        disabled={!this.state.formIsValid}>
                                     <IntlMessages id="page.signInButton"/>
                                 </Button>
-                            </div>*/}
-
-                            <Form onSubmit={this.handleSubmit}>
-                                <FormItem {...formItemLayout} label="Username" hasFeedback>
-                                    {getFieldDecorator('username', {
-                                        rules: [
-                                            {
-                                                required: true,
-                                                message: 'Please input your Username!',
-                                            },
-                                        ],
-                                    })(<Input name="username" id="username" onChange={
-                                        (_event) => this.setState({
-                                            credentials: {
-                                                ...this.state.credentials,
-                                                email: _event.target.value
-                                            }
-                                        })
-                                    }/>)}
-                                </FormItem>
-                                <FormItem {...formItemLayout} label="Password" hasFeedback>
-                                    {getFieldDecorator('password', {
-                                        rules: [
-                                            {
-                                                required: true,
-                                                message: 'Please input your password!',
-                                            }
-                                        ],
-                                    })(<Input type="password" onChange={
-                                        (_event) => this.setState({
-                                            credentials: {
-                                                ...this.state.credentials,
-                                                password: _event.target.value
-                                            }
-                                        })
-                                    }/>)}
-                                </FormItem>
-                                <FormItem {...tailFormItemLayout}>
-                                    <Button type="primary"
-                                            htmlType="submit"
-                                            loading={this.props.loading}>
-                                        <IntlMessages id="page.signInButton"/>
-                                    </Button>
-                                </FormItem>
-                            </Form>
+                            </div>
 
                             {/*<p className="isoHelperText">
                                 <IntlMessages id="page.signInPreview"/>
@@ -247,4 +283,4 @@ export default connect(
         loginFailed: state.Auth.get('loginFailed')
     }),
     {login}
-)(Form.create()(SignIn));
+)(SignIn);

@@ -8,8 +8,6 @@ const fakeApiCall = false; // auth0 or express JWT
 
 export function* loginRequest() {
     yield takeEvery(actions.LOGIN_REQUEST, function* (payload) {
-
-
         try {
             const credentials = payload.payload;
             const result = yield call(auth.signIn, credentials);
