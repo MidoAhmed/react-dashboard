@@ -539,7 +539,7 @@
   "page.signInGooglePlus": "Sign in with Google Plus",
   "page.signInAuth0": "Sign in with Auth0",
   "page.signInForgotPass": "Forgot password",
-  "page.signInCreateAccount": "Create an Isomorphoic account",
+  "page.signInCreateAccount": "Create an account",
   "page.signUpTitle": "Isomorphic",
   "page.signUpTermsConditions": "I agree with terms and condtions",
   "page.signUpButton": "Sign Up",
