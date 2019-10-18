@@ -1,4 +1,4 @@
-React Redux Admin Dashboard
+### React Redux Admin Dashboard
 
 ### Please check `src/config.js` & edit as your app.
 
