@@ -1,5 +1,5 @@
 {
-  "name": "isomorphic",
+  "name": "react-dashboard",
   "version": "2.4.0",
   "private": true,
   "dependencies": {
