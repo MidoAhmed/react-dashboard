@@ -61,6 +61,14 @@ const PublicRoutes = ({ history, isLoggedIn }) => {
           component={asyncComponent(() =>
             import('./containers/Page/resetPassword'))}
         />
+          {/* <Route
+          exact
+          path={'/comingSoon'}
+          component={asyncComponent(() =>
+            import('./containers/Page/comingSoon')
+          )}
+        /> */
+        }
         <Route
           path="/auth0loginCallback"
           render={props => {
