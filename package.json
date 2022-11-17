@@ -115,7 +115,7 @@
     "file-loader": "^1.1.6",
     "fs-extra": "^5.0.0",
     "google-maps-react": "^1.1.0",
-    "html-webpack-plugin": "^2.29.0",
+    "html-webpack-plugin": "^5.5.0",
     "jest": "^22.0.4",
     "leaflet": "^1.2.0",
     "leaflet-routing-machine": "^3.2.5",
