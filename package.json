@@ -13,7 +13,7 @@
     "d3-shape": "^1.0.6",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-react-intl": "^1.4.8",
-    "express": "^4.15.3",
+    "express": "^4.17.3",
     "firebase": "^4.8.1",
     "fixed-data-table-2": "^0.8.8",
     "frappe-charts": "^0.0.8",
